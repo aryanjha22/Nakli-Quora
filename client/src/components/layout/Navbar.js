@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ButtonAppBar() {
+export default function Navbar() {
   const classes = useStyles();
 
   return (
@@ -24,10 +24,10 @@ export default function ButtonAppBar() {
       <AppBar position="static" color="secondary">
         <Toolbar>
           <IconButton edge="start" className={classes.logo} color="inherit" aria-label="menu">
-            <img src={Line2} width="250px"></img>
+            <img src={Line2} width="250px" alt=""></img>
           </IconButton>
           <Typography variant="h6" className={classes.title}/>
-          <Button color="inherit">Login</Button>
+          <Button color="inherit" size="large" style={{height:"70px", width:"110px"}}>Sign Up</Button>
         </Toolbar>
       </AppBar>
     </div>
