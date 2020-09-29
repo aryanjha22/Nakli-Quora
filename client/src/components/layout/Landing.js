@@ -1,8 +1,9 @@
-import React, { Component } from 'react'
-import {Box, Container, Grid, Typography,TextField} from '@material-ui/core'
+import React from 'react'
+import {Container, Grid, Typography,TextField, Button} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import welcome from '../../components/welcome.jpg'
 import pen from '../../components/pen.jpg'
+import {Link} from 'react-router-dom'
 
 
 
@@ -25,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
     },
     right: {
         marginLeft: 'auto',
+        marginTop:"50px"
         
         },
     background: {
@@ -46,21 +48,27 @@ export default function Landing() {
         <div className={classes.background}>
             <Container>
                 <Grid container alignItems="center">
-                    <Grid>
+                    <Grid xs={6} sm={3}>
                         <img src={welcome} className={classes.welcome} alt=""></img>
                     </Grid>
                     
-                    <Grid className={classes.right} borderColor="primary.main">
+                    <Grid className={classes.right} borderColor="primary.main" xs={6} sm={3}>
                         <Typography><h1>Login</h1></Typography>
                         <form className={classes.root} noValidate autoComplete="off">  
-                            <TextField id="outlined-basic" label="Email" variant="outlined" />
+                            <TextField id="outlined-basic" label="Email" variant="outlined"/>
                             <br/>
                             <TextField id="outlined-basic" label="Password" variant="outlined" />
                         </form>
                         <br/>
+                        <Grid xs={6} sm={3}>
+                            <Button size="large" color="primary" variant="contained" style={{marginRight:"20px"}}>
+                                Login
+                            </Button>
+                        </Grid>
+                        <br/>
                         <a href="#">Forget Password?</a>
                         <br/>
-                        <a href="#">Not a User yet? Sign Up</a>
+                        <Link to="/register">Not a User yet? Sign Up</Link>
                     </Grid>
                 </Grid> 
             </Container>
