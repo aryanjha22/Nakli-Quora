@@ -1,98 +1,129 @@
-import React from 'react';
+import React, {Component} from 'react';
 import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
-import { Container, Grid, Button,Typography } from '@material-ui/core';
-import signup from '../../components/signup.jpg'
+import { Container, Grid, Button} from '@material-ui/core';
 import {Link} from 'react-router-dom'
 
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+
+export default class Register extends Component {
+  constructor(){
+    super();
+    this.state = {
+      first_name : '',
+      last_name : '',
+      email: '',
+      password: '',
+      password2: '',
+      errors: {}
+    };
     
-  },
-  background: {
-    background:`url(${signup})`,
-    minWidth: "100%",
-    position: "fixed",
-    minHeight: "89%",
-    backgroundSize: "cover",
-    backgroundPosition: "center"
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+
   }
-}));
 
-export default function FormPropsTextFields() {
-  const classes = useStyles();
+  onChange(e){
+    this.setState({ [e.target.id] : e.target.value})
+  }
 
-  return (
+  onSubmit(e){
+    e.preventDefault();
+
+    const newUser ={
+      first_name: this.state.first_name,
+      last_name: this.state.last_name,
+      email: this.state.email,
+      password: this.state.password,
+      password2: this.state.password2,
+    }
+
+    console.log(newUser)
+  }
+    
+   
+  render() {
+    return (
       <div>
-      <Container className={classes.root} maxWidth="xs">         
+
+      <Container maxWidth="xs"
+        style={{
+          marginTop: "30px",
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >         
         <h1>Sign Up</h1>
-        <form  noValidate autoComplete="off">
+        
+        <form autoComplete="off" noValidate onSubmit={this.onSubmit}>
         
         
         <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
                 <TextField
                     required
-                    id="filled-required"
+                    id="first_name"
                     label="First Name"
-                    defaultValue=""
                     variant="filled"
+                    value={this.state.first_name}
+                    onChange={this.onChange}
                 />
             </Grid>
             <Grid item xs={12} sm={6}>
                 <TextField
                     required
-                    id="filled-required"
+                    id="last_name"
                     label="Last Name"
-                    defaultValue=""
                     variant="filled"
+                    value={this.state.last_name}
+                    onChange={this.onChange}
                 />
             </Grid>
 
             <Grid item xs={12}>
                 <TextField
                     required
-                    id="filled-required"
+                    id="email"
                     label="Email"
                     fullWidth
-                    defaultValue=""
                     variant="filled"
+                    value={this.state.email}
+                    onChange={this.onChange}
                 />
             </Grid>
 
            <Grid item xs={12} sm={6}>
                 <TextField
                     required
-                    id="filled-password-input"
+                    id="password"
                     label="Password"
                     type="password"
                     autoComplete="current-password"
                     variant="filled"
+                    value={this.state.password}
+                    onChange={this.onChange}
                 />
             </Grid>
                 
           <Grid item xs={12} sm={6}>
                 <TextField
                     required
-                    id="filled-password-input"
+                    id="password2"
                     label="Confirm Password"
                     type="password"
                     autoComplete="current-password"
                     variant="filled"
+                    value={this.state.password2}
+                    onChange={this.onChange}
                 />
-           </Grid>
-            
+           </Grid>           
         
         </Grid> 
         
         <br/>
         
         <Button
+            id="submit"
             type="submit"
             fullWidth
             variant="contained"
@@ -118,4 +149,6 @@ export default function FormPropsTextFields() {
         </Typography> */}
     </div>
   );
+  }
 }
+
