@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types'
 import TextField from '@material-ui/core/TextField';
 import { Container, Grid, Button} from '@material-ui/core';
 import {Link} from 'react-router-dom'
+import axios from 'axios'
+import {connect} from 'react-redux'
+import {registerUser} from '../../actions/authActions'
 
 
-
-export default class Register extends Component {
+class Register extends Component {
   constructor(){
     super();
     this.state = {
@@ -37,104 +40,123 @@ export default class Register extends Component {
       password2: this.state.password2,
     }
 
-    console.log(newUser)
+    this.props.registerUser(newUser)
+
+    // axios.post('/api/users/register', newUser)
+    //   .then(res => console.log(res.data))
+    //   .catch(err => this.setState({errors: err.response.data}))
   }
     
    
   render() {
+
+    const {errors} = this.state
+
+    const {user} = this.props.auth
+
     return (
       <div>
+        {user ? user.first_name : null}
+        <Container maxWidth="xs"
+          style={{
+            marginTop: "30px",
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >         
+          <h1>Sign Up</h1>
+          
+          <form autoComplete="off" noValidate onSubmit={this.onSubmit}>
+          
+          
+          <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                  <TextField
+                      error = {errors.first_name}
+                      required
+                      id="first_name"
+                      label="First Name"
+                      variant="filled"
+                      value={this.state.first_name}
+                      onChange={this.onChange}
+                      helperText={errors.first_name}
+                  />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                  <TextField
+                      error = {errors.last_name}
+                      helperText={errors.last_name}
+                      required
+                      id="last_name"
+                      label="Last Name"
+                      variant="filled"
+                      value={this.state.last_name}
+                      onChange={this.onChange}
+                  />
+              </Grid>
 
-      <Container maxWidth="xs"
-        style={{
-          marginTop: "30px",
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >         
-        <h1>Sign Up</h1>
-        
-        <form autoComplete="off" noValidate onSubmit={this.onSubmit}>
-        
-        
-        <Grid container spacing={2}>
+              <Grid item xs={12}>
+                  <TextField
+                      error = {errors.email}
+                      helperText={errors.email}
+                      required
+                      id="email"
+                      label="Email"
+                      fullWidth
+                      variant="filled"
+                      value={this.state.email}
+                      onChange={this.onChange}
+                  />
+              </Grid>
+
             <Grid item xs={12} sm={6}>
-                <TextField
-                    required
-                    id="first_name"
-                    label="First Name"
-                    variant="filled"
-                    value={this.state.first_name}
-                    onChange={this.onChange}
-                />
-            </Grid>
+                  <TextField
+                      error = {errors.password}
+                      helperText={errors.password}
+                      required
+                      id="password"
+                      label="Password"
+                      type="password"
+                      autoComplete="current-password"
+                      variant="filled"
+                      value={this.state.password}
+                      onChange={this.onChange}
+                  />
+              </Grid>
+                  
             <Grid item xs={12} sm={6}>
-                <TextField
-                    required
-                    id="last_name"
-                    label="Last Name"
-                    variant="filled"
-                    value={this.state.last_name}
-                    onChange={this.onChange}
-                />
-            </Grid>
-
-            <Grid item xs={12}>
-                <TextField
-                    required
-                    id="email"
-                    label="Email"
-                    fullWidth
-                    variant="filled"
-                    value={this.state.email}
-                    onChange={this.onChange}
-                />
-            </Grid>
-
-           <Grid item xs={12} sm={6}>
-                <TextField
-                    required
-                    id="password"
-                    label="Password"
-                    type="password"
-                    autoComplete="current-password"
-                    variant="filled"
-                    value={this.state.password}
-                    onChange={this.onChange}
-                />
-            </Grid>
-                
-          <Grid item xs={12} sm={6}>
-                <TextField
-                    required
-                    id="password2"
-                    label="Confirm Password"
-                    type="password"
-                    autoComplete="current-password"
-                    variant="filled"
-                    value={this.state.password2}
-                    onChange={this.onChange}
-                />
-           </Grid>           
-        
-        </Grid> 
-        
-        <br/>
-        
-        <Button
-            id="submit"
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-          >
-            Sign Up
-          </Button>
-             
-        </form>
-        
-    </Container>
+                  <TextField
+                      error = {errors.password2}
+                      helperText={errors.password2}
+                      required
+                      id="password2"
+                      label="Confirm Password"
+                      type="password"
+                      autoComplete="current-password"
+                      variant="filled"
+                      value={this.state.password2}
+                      onChange={this.onChange}
+                  />
+            </Grid>           
+          
+          </Grid> 
+          
+          <br/>
+          
+          <Button
+              id="submit"
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+            >
+              Sign Up
+            </Button>
+              
+          </form>
+          
+      </Container>
     
     
     {/* Copyright message */}
@@ -152,3 +174,13 @@ export default class Register extends Component {
   }
 }
 
+Register.propTypes ={
+  registerUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) =>({
+  auth: state.auth
+})
+
+export default connect(mapStateToProps, {registerUser})(Register)
