@@ -1,12 +1,15 @@
 import React,{Component} from 'react'
-import {Container, Grid, Typography,TextField, Button} from '@material-ui/core'
+import {Container, Grid,TextField, Button} from '@material-ui/core'
 import welcome from '../../components/welcome.jpg'
 import pen from '../../components/pen.jpg'
 import {Link} from 'react-router-dom'
+import PropTypes from 'prop-types'
+import {connect} from 'react-redux'
+import {loginUser} from '../../actions/authActions'
 
 
 
-export default class Landing extends Component {
+class Landing extends Component {
     constructor(){
         super();
         this.state = {
@@ -23,21 +26,39 @@ export default class Landing extends Component {
         this.setState({[e.target.id] : e.target.value})
     }
 
+    componentDidMount(){
+        if(this.props.auth.isAuthenticated){
+            this.props.history.push('/dashboard')
+        }
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(nextProps.auth.isAuthenticated){
+            this.props.history.push('/dashboard')
+        }
+        
+        if(nextProps.errors){
+            this.setState({errors: nextProps.errors})
+        }
+    }
+
     onSubmit(e){
         e.preventDefault();
     
-        const user ={
+        const userData ={
           
           email: this.state.email,
           password: this.state.password,
           
         }
     
-        console.log(user)
+        this.props.loginUser(userData)
       }
     
     
     render() {
+        const {errors} = this.state
+
         return (
             <div style={{backgroundImage: `url(${pen})`,
                 backgroundPosition: 'center',
@@ -71,22 +92,31 @@ export default class Landing extends Component {
                                 
                                 <form noValidate autoComplete="off" onSubmit={this.onSubmit}>  
                                     <TextField 
+                                        required
                                         style={{width: '35ch'}} 
                                         id="email" 
                                         label="Email" 
                                         variant="outlined"
                                         value={this.state.email}
                                         onChange={this.onChange}
+                                        error = {errors.email}
+                                        helperText={errors.email}
+                                        
                                     />
                                     <br/><br/>
 
                                     <TextField 
+                                        required
                                         style={{width: '35ch'}} 
                                         id="password" 
+                                        type = "password"
                                         label="Password" 
                                         variant="outlined" 
                                         value={this.state.password}
                                         onChange={this.onChange}
+                                        error = {errors.password}
+                                        helperText={errors.password}
+                                       
                                     />
                                 
                             
@@ -125,7 +155,18 @@ export default class Landing extends Component {
     }
 }
 
+Landing.propTypes ={
+    loginUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+    errors: PropTypes.string.isRequired
+}
 
+const mapStateToProps = (state) =>({
+    auth: state.auth,
+    errors: state.errors
+})
+
+export default connect(mapStateToProps, {loginUser})(Landing)
 
 
 
