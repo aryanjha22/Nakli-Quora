@@ -165,6 +165,7 @@ class Register extends Component {
       </Container>
     
     
+    
     {/* Copyright message */}
     
     {/* <Typography style={{marginRight:"200px"}} variant="body2" color="textSecondary" align="center">
