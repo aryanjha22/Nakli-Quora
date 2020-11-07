@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
+import { Container, Grid, TextField } from '@material-ui/core'
 
 
 class CreateProfile extends Component {
@@ -29,15 +30,34 @@ class CreateProfile extends Component {
     }
 
     onChange(e){
-        this.setState({[e.target.name]: e.target.value})
+        this.setState({[e.target.id]: e.target.value})
     }
 
     render() {
         const {errors} = this.state
         return (
-            <div>
-                
-            </div>
+            <Container maxWidth="sm"
+                style={{
+                    marginTop: "30px",
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                }}
+            >
+                <div>
+                    <form>
+                        <Grid container>
+                            <Grid item xs={12}>
+                                <TextField 
+                                    id="outlined-basic" 
+                                    label="Outlined" 
+                                    variant="outlined" 
+                                />
+                            </Grid>
+                        </Grid>                        
+                    </form>
+                </div>
+            </Container>
         )
     }
 }

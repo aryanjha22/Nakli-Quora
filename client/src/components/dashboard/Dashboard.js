@@ -26,7 +26,7 @@ class Dashboard extends Component {
             } else{
                 //User is logged in but no profile
                 dashboardContent = (
-                    <Container>
+                    <Container maxWidth="xs">
                         <div>
                             <h4>WELCOME!!! {user.first_name}</h4>
                             <p>You have not Yet setup your Profile yet! Setup One!</p>
@@ -45,7 +45,7 @@ class Dashboard extends Component {
         return (
             <Container>
                 <div className="dashboard">
-                    <h1>DASHBOARD</h1>
+                    <h1><Container maxWidth="xs">Dashboard</Container></h1>
                     {dashboardContent}
                 </div>
             </Container>

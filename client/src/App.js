@@ -16,6 +16,7 @@ import Navbar from '../src/components/layout/Navbar'
 import Landing from '../src/components/layout/Landing'
 import Register from './components/register/Register'
 import Dashboard from './components/dashboard/Dashboard'
+import CreateProfile from './components/create-profile/CreateProfile'
 
 
 
@@ -51,6 +52,9 @@ function App() {
             <Route exact path="/register" component={Register}/>
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard}/>
+            </Switch>
+            <Switch>
+              <PrivateRoute exact path="/create-profile" component={CreateProfile}/>
             </Switch>
           </div>
         </div>
