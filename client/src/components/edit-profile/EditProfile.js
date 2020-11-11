@@ -2,10 +2,12 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import { Button, Container, Grid, TextField } from '@material-ui/core'
-import {createProfile} from '../../actions/profileActions'
+import {createProfile, getCurrentProfile} from '../../actions/profileActions'
 import {withRouter} from 'react-router-dom'
+import isEmpty from '../../validations/is-empty'
 
-class CreateProfile extends Component {
+
+class EditProfile extends Component {
     constructor(props){
         super(props)  
         this.state={
@@ -24,10 +26,40 @@ class CreateProfile extends Component {
         this.onSubmit = this.onSubmit.bind(this)
     }
 
+    
     componentWillReceiveProps(nextProps){
         if(nextProps.errors){
             this.setState({errors: nextProps.errors})
         }
+        if(nextProps.profile.profile){
+            const profile = nextProps.profile.profile
+
+            //if profile field doesn't exist
+            profile.location = !isEmpty(profile.location) ? profile.location : ''
+            profile.bio = !isEmpty(profile.bio) ? profile.bio : ''
+            profile.education = !isEmpty(profile.education) ? profile.education : ''
+            profile.twitter = !isEmpty(profile.twitter) ? profile.twitter : ''
+            profile.facebook = !isEmpty(profile.facebook) ? profile.facebook : ''
+            profile.linkedin = !isEmpty(profile.linkedin) ? profile.linkedin : ''
+            profile.instagram = !isEmpty(profile.instagram) ? profile.instagram : ''
+
+
+            //set component field state
+            this.setState({
+                handle: profile.handle,
+                location: profile.location,
+                bio: profile.bio,
+                education:profile.education,
+                twitter:profile.twitter,
+                facebook: profile.facebook,
+                linkedin: profile.linkedin,
+                instagram:profile.instagram,
+            })
+        }
+    }
+
+    componentDidMount(){
+        this.props.getCurrentProfile()
     }
 
     onSubmit(e){
@@ -67,6 +99,7 @@ class CreateProfile extends Component {
                 }}
             >
                 <div>
+                    <h1>Edit Profile!</h1>
                     <form autoComplete="off" onSubmit={this.onSubmit}>
                         <Grid container>
                             <Grid item xs={12}>
@@ -191,9 +224,11 @@ class CreateProfile extends Component {
     }
 }
 
-CreateProfile.propTypes ={
+EditProfile.propTypes ={
     profile: PropTypes.object.isRequired,
-    errors: PropTypes.object.isRequired
+    errors: PropTypes.object.isRequired,
+    createProfile: PropTypes.func.isRequired,
+    getCurrentProfile: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state =>({
@@ -201,4 +236,4 @@ const mapStateToProps = state =>({
     errors: state.errors
 })
 
-export default connect(mapStateToProps, {createProfile})(withRouter(CreateProfile))
+export default connect(mapStateToProps, {createProfile, getCurrentProfile})(withRouter(EditProfile))

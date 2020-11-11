@@ -17,7 +17,7 @@ import Landing from '../src/components/layout/Landing'
 import Register from './components/register/Register'
 import Dashboard from './components/dashboard/Dashboard'
 import CreateProfile from './components/create-profile/CreateProfile'
-
+import EditProfile from './components/edit-profile/EditProfile'
 
 
 //checks for token
@@ -55,6 +55,9 @@ function App() {
             </Switch>
             <Switch>
               <PrivateRoute exact path="/create-profile" component={CreateProfile}/>
+            </Switch>
+            <Switch>
+              <PrivateRoute exact path="/edit-profile" component={EditProfile}/>
             </Switch>
           </div>
         </div>
