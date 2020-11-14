@@ -19,16 +19,23 @@ class Navbar extends Component {
     const {isAuthenticated, user} = this.props.auth
 
     const authLinks = (
-      <a href="#" onClick={this.onLogoutClick.bind(this)}>
-        <Button color="secondary"  style={{height:"55px", width:"110px",color:"black",backgroundColor: "magenta"}} variant="contained">
-          <img 
-            src={user.avatar} 
-            alt={user.first_name}
-            style={{width:"25px", marginRight:"5px"}} 
-            title="You must have a Gravatar connected to your email to display your image"/>
-          <Typography>Logout</Typography>
-        </Button>
-      </a> 
+      <div>
+        <Link to="/dashboard">
+          <Button color="secondary" variant="contained" style={{marginRight:"30px"}}>
+            Dashboard
+          </Button>
+        </Link>
+        <a href="#" onClick={this.onLogoutClick.bind(this)}>
+          <Button color="secondary"  style={{ width:"110px"}} variant="contained">
+            <img 
+              src={user.avatar} 
+              alt={user.first_name}
+              style={{width:"25px", marginRight:"5px"}} 
+              title="You must have a Gravatar connected to your email to display your image"/>
+            Logout
+          </Button>
+        </a> 
+      </div>
     )
 
     const  guestLinks = (
