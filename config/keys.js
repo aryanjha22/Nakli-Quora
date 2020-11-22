@@ -1,5 +1,5 @@
 module.exports ={
-    mongoURI : 'mongodb+srv://AJ:ajstar@nakli-quora.ajrei.mongodb.net/Nakli-Quora?retryWrites=true&w=majority'
+    mongoURI : 'enter your url'
     ,
     secretOrKey: 'secret'
 }
